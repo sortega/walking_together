@@ -62,7 +62,8 @@
         <script src="date.js"></script>
 
         <script>
-            var DAY_MILLIS = 24 * 60 * 60 * 1000;
+	    var HOUR_MILLIS = 60 * 60 * 1000;
+            var DAY_MILLIS = 24 * HOUR_MILLIS;
 
             function updateTime() {
                 var origin = new Date(2011, 0, 2);
@@ -93,6 +94,9 @@
 
             document.observe('dom:loaded', function() {
                 updateTime();
+		window.setInterval(function updateTime() {
+		    updateTime(); 
+		}, HOUR_MILLIS);
 
                 var person_fps = 5;
                 animate($('sebas'), 0, person_fps);

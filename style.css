@@ -1,0 +1,68 @@
+body, html {
+    background: black;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+body {
+    width: 440px;
+    margin: 2em auto;
+}
+
+p {
+    text-align: right;
+    font-size: 110%;
+}
+
+#frame {
+    position: relative;
+    height: 320px;
+    background: green url(grass.jpg) repeat 0 0;
+    margin: 2em auto;
+}
+
+#list {
+    float:left;
+    text-align: left;
+    font-weight: lighter;
+    font-size: 90%;
+    color: #ccc;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#list ul li {
+}
+
+#kesi {
+    background-image: url("kesi.png");
+    left: 190px;
+    top: 140px;
+}
+
+#sebas {
+    background-image: url("sebas.png");
+    left: 225px;
+    top: 135px;
+}
+
+#kesi, #sebas {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+}
+
+.sprite0 {
+    background-position: 0 0;
+}
+
+.sprite1 {
+    background-position: -32px 0;
+}
+
+.sprite2 {
+    background-position: -64px 0;
+}
+

@@ -1,111 +1,12 @@
 <html>
     <head>
         <title>Walking together</title>
-        <style>
-            body, html {
-                background: black;
-                color: white;
-                font-family: sans-serif;
-                text-align: center;
-            }
-
-            body {
-                width: 440px;
-                margin: 2em auto;
-            }
-
-            p {
-                text-align: right;
-                font-size: 110%;
-            }
-
-            #frame {
-                position: relative;
-                witdh: 400px;
-                height: 320px;
-                background: green url(grass.jpg) repeat 0 0;
-                margin: 2em auto;
-            }
-
-            #kesi {
-                background-image: url("kesi.png");
-                left: 190px;
-                top: 140px;
-            }
-
-            #sebas {
-                background-image: url("sebas.png");
-                left: 225px;
-                top: 135px;
-            }
-
-            #kesi, #sebas {
-                width: 32px;
-                height: 32px;
-                position: absolute;
-            }
-
-            .sprite0 {
-                background-position: 0 0;
-            }
-
-            .sprite1 {
-                background-position: -32px 0;
-            }
-
-            .sprite2 {
-                background-position: -64px 0;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
 
         <script src="prototype-1.6.0.3.js"></script>
         <script src="date.js"></script>
-
-        <script>
-	    var HOUR_MILLIS = 60 * 60 * 1000;
-            var DAY_MILLIS = 24 * HOUR_MILLIS;
-
-            function updateTime() {
-                var origin = new Date(2011, 0, 2);
-                var now = new Date();
-                var days = Math.floor((now.getTime() - origin.getTime()) / DAY_MILLIS);
-
-                $('time').innerHTML = days + " days"
-            }
-
-            function animate(node, startingFrame, fps) {
-                var frame = startingFrame;
-                window.setInterval(function tick() {
-                    node.removeClassName('sprite0');
-                    node.removeClassName('sprite1');
-                    node.removeClassName('sprite2');
-                    node.addClassName('sprite' + frame);
-                    frame = (frame + 1) % 3;
-                }, 1000/fps);
-            }
-
-            function scroll(node, fps) {
-                var delta = 0;
-                window.setInterval(function tick() {
-                    node.setStyle({ backgroundPosition: "0 " + delta + "px"});
-                    delta = (delta - 1) % 128;
-                }, 1000/fps);
-            }
-
-            document.observe('dom:loaded', function() {
-                updateTime();
-		window.setInterval(function updateTime() {
-		    updateTime(); 
-		}, HOUR_MILLIS);
-
-                var person_fps = 5;
-                animate($('sebas'), 0, person_fps);
-                animate($('kesi'), 1, person_fps);
-
-                var background_fps = 30;
-                scroll($('frame'), background_fps);
-            });
-        </script>
+        <script src="time.js"></script>
+        <script src="walking.js"></script>
     </head>
     <body>
         <h1><span id="time">Some time</span> walking together</h1>
@@ -114,6 +15,12 @@
             <div id="kesi" class="sprite0"></div>
             <div id="sebas" class="sprite1" title="I love you"></div>
         </div>
+
+        <ul id="list">
+            <li id="weeks"></li>
+            <li id="months"></li>
+            <li id="years"></li>
+        </ul>
 
         <p>...and getting closer little by little</p>
     </body>

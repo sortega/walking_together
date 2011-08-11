@@ -46,14 +46,21 @@ function yearsBetween(from, to) {
     return unitsBetween({years: 1}, from, to);
 }
 
-function animate(node, startingFrame, fps) {
+function animate(node, path, startingFrame, fps) {
     var frame = startingFrame;
     window.setInterval(function tick() {
 	    node.removeClassName('sprite0');
 	    node.removeClassName('sprite1');
 	    node.removeClassName('sprite2');
-	    node.addClassName('sprite' + frame);
-	    frame = (frame + 1) % 3;
+	    node.addClassName('sprite' + frame % 3);
+
+	    var pos = path(frame);
+	    node.setStyle({
+		left: pos[0],
+		top: pos[1]
+	    });
+
+	    frame += 1;
     }, 1000/fps);
 }
 
@@ -65,17 +72,49 @@ function scroll(node, fps) {
     }, 1000/fps);
 }
 
+function constant(x, y) {
+    return function(t) {
+	return [x, y];
+    };
+}
+
+function linear(x1, y1, x2, y2, frames) {
+    return function (t) {
+	if (t < frames) {
+	    return [
+		x1 + (x2 - x1) * (t/frames),
+		y1 + (y2 - y1) * (t/frames)
+	       ];
+	} else {
+	    return [x2, y2];
+	}
+    };
+}
+
+function asymptotic(x1, y1, x2, y2, halflife) {
+    return function (t) {
+	var progress = 1 - Math.pow(Math.E, -t/halflife);
+	return [
+	    x1 + (x2 - x1) * progress,
+	    y1 + (y2 - y1) * progress
+	];
+    };
+}
+
 document.observe('dom:loaded', function() {
+    updateTime();
+    window.setInterval(function updateTime() {
 	updateTime();
-	window.setInterval(function updateTime() {
-	    updateTime(); 
-	    }, HOUR_MILLIS);
+    }, HOUR_MILLIS);
 
-	var person_fps = 5;
-	animate($('sebas'), 0, person_fps);
-	animate($('kesi'), 1, person_fps);
+    var person_fps = 5;
+    //animate($('sebas'), constant(225, 135), 0, person_fps);
+    //animate($('kesi'), constant(190, 140), 1, person_fps);
+    //animate($('sebas'), linear(250, 0, 225, 135, 200), 0, person_fps);
+    //animate($('kesi'), linear(165, 0, 190, 140, 200), 1, person_fps);
+    animate($('sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
+    animate($('kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
 
-	var background_fps = 30;
-	scroll($('frame'), background_fps);
+    var background_fps = 30;
+    scroll($('frame'), background_fps);
 });
-

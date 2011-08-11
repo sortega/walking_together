@@ -20,6 +20,7 @@ p {
     height: 320px;
     background: green url(grass.jpg) repeat 0 0;
     margin: 2em auto;
+    overflow: hidden;
 }
 
 #list {
@@ -38,20 +39,25 @@ p {
 
 #kesi {
     background-image: url("kesi.png");
+/*
     left: 190px;
     top: 140px;
+*/
 }
 
 #sebas {
     background-image: url("sebas.png");
+/*
     left: 225px;
     top: 135px;
+*/
 }
 
 #kesi, #sebas {
     width: 32px;
     height: 32px;
     position: absolute;
+    top: -32px;
 }
 
 .sprite0 {

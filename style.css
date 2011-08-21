@@ -64,7 +64,7 @@ p {
     background-position: 0 0;
 }
 
-.sprite1 {
+.sprite1, .sprite3 {
     background-position: -32px 0;
 }
 

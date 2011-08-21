@@ -52,7 +52,8 @@ function animate(node, path, startingFrame, fps) {
 	    node.removeClassName('sprite0');
 	    node.removeClassName('sprite1');
 	    node.removeClassName('sprite2');
-	    node.addClassName('sprite' + frame % 3);
+	    node.removeClassName('sprite3');
+	    node.addClassName('sprite' + frame % 4);
 
 	    var pos = path(frame);
 	    node.setStyle({

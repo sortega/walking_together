@@ -102,6 +102,41 @@ function asymptotic(x1, y1, x2, y2, halflife) {
     };
 }
 
+// 1 -> day; 0 -> night; sunrise/sunset in between
+function dailyness() {
+    var date = Date.today();
+    var month = date.getMonth();
+    var day = date.getDate();
+    var year = date.getFullYear();
+    var timezone = -1;
+
+    var result = SunriseSunset(8, 14, 2011, 0, 40, 25, 0, 3, 41, 0);
+
+    var sunrise = Date.today();
+    sunrise.setHours(result.riseHours);
+    sunrise.setMinutes(result.riseMinutes);
+
+    var sunset = Date.today();
+    sunset.setHours(result.setHours);
+    sunset.setMinutes(result.setMinutes);
+
+    return (date.between(sunrise, sunset))? 1 : 0;
+}
+
+function animateDayNight() {
+    var fps = 2;
+    var shade = $('shade');
+
+    function tick () {
+	var dness = dailyness();
+	console.log(dness);
+	shade.style.zIndex = (dness < 1) ? 1 : -1;
+    }
+
+    tick();
+    setInterval(tick, 1000/fps);
+}
+
 document.observe('dom:loaded', function() {
     updateTime();
     window.setInterval(function updateTime() {
@@ -118,4 +153,6 @@ document.observe('dom:loaded', function() {
 
     var background_fps = 30;
     scroll($('frame'), background_fps);
+
+    animateDayNight();
 });

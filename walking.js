@@ -103,8 +103,7 @@ function asymptotic(x1, y1, x2, y2, halflife) {
 }
 
 // 1 -> day; 0 -> night; sunrise/sunset in between
-function dailyness() {
-    var date = Date.today();
+function dailyness(date) {
     var month = date.getMonth();
     var day = date.getDate();
     var year = date.getFullYear();
@@ -120,17 +119,32 @@ function dailyness() {
     sunset.setHours(result.setHours);
     sunset.setMinutes(result.setMinutes);
 
-    return (date.between(sunrise, sunset))? 1 : 0;
+    if (date.between(sunrise, sunset)) {
+	return 1;
+    } else {
+	// Sunrise/sunset transition
+	var period = 600;
+	var secondsBeforeSunrise = 
+	    Math.abs(sunrise.getTime() - date.getTime()) / 1000;
+	var secondsAfterSunset = 
+	    Math.abs(date.getTime() - sunset.getTime()) / 1000;
+	return 1 - Math.min(1, 
+		secondsBeforeSunrise/period,
+		secondsAfterSunset/period);
+
+    }
 }
 
 function animateDayNight() {
-    var fps = 2;
+    var fps = 1;
     var shade = $('shade');
 
     function tick () {
-	var dness = dailyness();
-	console.log(dness);
+	var dness = dailyness(new Date());
 	shade.style.zIndex = (dness < 1) ? 1 : -1;
+	var alpha = 0.4;
+	shade.style.backgroundColor = "rgba(0, 0, 255, " + 
+	    alpha*(1-dness) + ")";
     }
 
     tick();

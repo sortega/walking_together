@@ -5,16 +5,20 @@ var ORIGIN = Date.parseExact("01/02/2011", "MM/dd/yyyy");
 function updateTime() {
     var today = Date.today();
 
-    var days = Math.floor((today.days() - ORIGIN.days()) /
-	    DAY_MILLIS);
-    $('time').innerHTML = days + " days";
+    var days = (today.days() - ORIGIN.days()) / DAY_MILLIS;
+    $('time').innerHTML = Math.floor(days) + " days";
 
-    var weeks = Math.floor((today.days() - ORIGIN.days()) /
-	    (7 * DAY_MILLIS));
-    $('weeks').innerHTML = weeks + " weeks";
+    var weeks = (today.days() - ORIGIN.days()) / (7 * DAY_MILLIS);
+    var weeksText = formatTime(Math.floor(weeks), "week");
+    if (weeks - Math.floor(weeks) < 1/7)
+        weeksText = markAsUpdated(weeksText);
+    $('weeks').innerHTML = weeksText;
 
     var months = monthsBetween(ORIGIN, today);
-    $('months').innerHTML = months + " months";
+    var monthText = formatTime(months, "month");
+    if (today.getDay() == ORIGIN.getDay())
+        monthText = markAsUpdated(monthText);
+    $('months').innerHTML = monthText;
 
     updateYears();
 }
@@ -35,15 +39,28 @@ function monthsBetween(from, to) {
 }
 
 function updateYears() {
-    var years = yearsBetween(ORIGIN, Date.today());
+    var today = Date.today();
+    var years = yearsBetween(ORIGIN, today);
     if (years > 0) {
-	$('years').innerHTML = years + " year" + 
-	    ((years > 1)? "s": "");
+        var yearsText = formatTime(years, "year");
+        if (ORIGIN.getMonth() == today.getMonth() && ORIGIN.getDay() == today.getDay())
+            yearsText = markAsUpdated(yearsText);
+    	$('years').innerHTML = yearsText;
     }
 }
 
 function yearsBetween(from, to) {
     return unitsBetween({years: 1}, from, to);
+}
+
+function markAsUpdated(text) {
+    return '<span class="updated">' + text + '</span>';
+}
+
+function formatTime(amount, unit) {
+    var text = amount + " " + unit;
+    text += (amount != 1)? "s" : "";
+    return text;
 }
 
 function animate(node, path, startingFrame, fps) {

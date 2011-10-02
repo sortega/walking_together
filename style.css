@@ -49,18 +49,10 @@ p {
 
 #kesi {
     background-image: url("img/kesi.png");
-/*
-    left: 190px;
-    top: 140px;
-*/
 }
 
 #sebas {
     background-image: url("img/sebas.png");
-/*
-    left: 225px;
-    top: 135px;
-*/
 }
 
 #kesi, #sebas {
@@ -82,3 +74,7 @@ p {
     background-position: -64px 0;
 }
 
+.updated {
+    font-weight: bold;
+    color: yellow;
+}

@@ -55,7 +55,15 @@ p {
     background-image: url("img/sebas.png");
 }
 
-#kesi, #sebas {
+#sign {
+    background-image: url("img/sign.png");
+    line-height: 27px;
+    font-size: 8px;
+    text-align: center;
+    color: #c1b799;
+}
+
+#kesi, #sebas, #sign {
     width: 32px;
     height: 32px;
     position: absolute;

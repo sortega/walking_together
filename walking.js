@@ -96,6 +96,13 @@ function constant(x, y) {
     };
 }
 
+function cycle(x1, y1, x2, y2, frames) {
+    var lin = linear(x1, y1, x2, y2, frames);
+    return function (t) {
+	return lin(t % frames);
+    }
+}
+
 function linear(x1, y1, x2, y2, frames) {
     return function (t) {
 	if (t < frames) {
@@ -183,6 +190,7 @@ document.observe('dom:loaded', function() {
     animate($('kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
 
     var background_fps = 30;
+    animate($('sign'), cycle(320, 320, 320, -32, 352), 0, background_fps);
     scroll($('frame'), background_fps);
 
     animateDayNight();

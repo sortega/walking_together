@@ -6,19 +6,19 @@ function updateTime() {
     var today = Date.today();
 
     var days = (today.days() - ORIGIN.days()) / DAY_MILLIS;
-    $('time').innerHTML = Math.floor(days) + " days";
+    $('#time').html(Math.floor(days) + " days");
 
     var weeks = (today.days() - ORIGIN.days()) / (7 * DAY_MILLIS);
     var weeksText = formatTime(Math.floor(weeks), "week");
     if (weeks - Math.floor(weeks) < 1/7)
         weeksText = markAsUpdated(weeksText);
-    $('weeks').innerHTML = weeksText;
+    $('#weeks').html(weeksText);
 
     var months = monthsBetween(ORIGIN, today);
     var monthText = formatTime(months, "month");
     if (today.getDay() == ORIGIN.getDay())
         monthText = markAsUpdated(monthText);
-    $('months').innerHTML = monthText;
+    $('#months').html(monthText);
 
     updateYears();
 }
@@ -45,7 +45,7 @@ function updateYears() {
         var yearsText = formatTime(years, "year");
         if (ORIGIN.getMonth() == today.getMonth() && ORIGIN.getDay() == today.getDay())
             yearsText = markAsUpdated(yearsText);
-    	$('years').innerHTML = yearsText;
+    	$('#years').html(yearsText);
     }
 }
 
@@ -66,14 +66,14 @@ function formatTime(amount, unit) {
 function animate(node, path, startingFrame, fps) {
     var frame = startingFrame;
     window.setInterval(function tick() {
-	    node.removeClassName('sprite0');
-	    node.removeClassName('sprite1');
-	    node.removeClassName('sprite2');
-	    node.removeClassName('sprite3');
-	    node.addClassName('sprite' + frame % 4);
+	    node.removeClass('sprite0');
+	    node.removeClass('sprite1');
+	    node.removeClass('sprite2');
+	    node.removeClass('sprite3');
+	    node.addClass('sprite' + frame % 4);
 
 	    var pos = path(frame);
-	    node.setStyle({
+	    node.css({
 		left: pos[0],
 		top: pos[1]
 	    });
@@ -85,7 +85,7 @@ function animate(node, path, startingFrame, fps) {
 function scroll(node, fps) {
     var delta = 0;
     window.setInterval(function tick() {
-	    node.setStyle({ backgroundPosition: "0 " + delta + "px"});
+	    node.css({ backgroundPosition: "0 " + delta + "px"});
 	    delta = (delta - 1) % 128;
     }, 1000/fps);
 }
@@ -161,21 +161,21 @@ function dailyness(date) {
 
 function animateDayNight() {
     var fps = 1;
-    var shade = $('shade');
+    var shade = $('#shade');
 
     function tick () {
 	var dness = dailyness(new Date());
-	shade.style.zIndex = (dness < 1) ? 1 : -1;
+	shade.css('zIndex', (dness < 1) ? 1 : -1);
 	var alpha = 0.4;
-	shade.style.backgroundColor = "rgba(0, 0, 255, " + 
-	    alpha*(1-dness) + ")";
+	shade.css('backgroundColor', "rgba(0, 0, 255, " + 
+	    alpha*(1-dness) + ")");
     }
 
     tick();
     setInterval(tick, 1000/fps);
 }
 
-document.observe('dom:loaded', function() {
+$(document).ready(function() {
     updateTime();
     window.setInterval(function updateTime() {
 	updateTime();
@@ -186,12 +186,12 @@ document.observe('dom:loaded', function() {
     //animate($('kesi'), constant(190, 140), 1, person_fps);
     //animate($('sebas'), linear(250, 0, 225, 135, 200), 0, person_fps);
     //animate($('kesi'), linear(165, 0, 190, 140, 200), 1, person_fps);
-    animate($('sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
-    animate($('kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
+    animate($('#sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
+    animate($('#kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
 
     var background_fps = 30;
-    animate($('sign'), cycle(320, 320, 320, -32, 352), 0, background_fps);
-    scroll($('frame'), background_fps);
+    //animate($('sign'), cycle(320, 320, 320, -32, 352), 0, background_fps);
+    scroll($('#frame'), background_fps);
 
     animateDayNight();
 });

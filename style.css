@@ -47,7 +47,7 @@ p {
 #list ul li {
 }
 
-#kesi {
+#kesi, .kesi {
     background-image: url("img/kesi.png");
 }
 
@@ -63,7 +63,7 @@ p {
     color: #c1b799;
 }
 
-#kesi, #sebas, #sign {
+#kesi, .kesi, #sebas, #sign {
     width: 32px;
     height: 32px;
     position: absolute;

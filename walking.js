@@ -186,8 +186,41 @@ $(document).ready(function() {
     //animate($('kesi'), constant(190, 140), 1, person_fps);
     //animate($('sebas'), linear(250, 0, 225, 135, 200), 0, person_fps);
     //animate($('kesi'), linear(165, 0, 190, 140, 200), 1, person_fps);
-    animate($('#sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
-    animate($('#kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
+    
+    //animate($('#sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
+    //animate($('#kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
+    
+    animate($('#sebas'), asymptotic(315, 0, 275, 160, 200), 0, person_fps);
+    $.each([
+	    {'dx': -90, 'dy': -64},
+	    {'dx': -58, 'dy': -64},
+	    {'dx': -26, 'dy': -64},
+	    {'dx':  16, 'dy': -64},
+	    {'dx':  48, 'dy': -64},
+	    {'dx':  80, 'dy': -64},
+	    {'dx': -26, 'dy': -32},
+	    {'dx':  80, 'dy': -32},
+	    {'dx': -90, 'dy':   0},
+	    {'dx': -58, 'dy':   0},
+	    {'dx': -26, 'dy':   0},
+	    {'dx':  16, 'dy':   0},
+	    {'dx':  48, 'dy':   0},
+	    {'dx':  80, 'dy':   0},
+	    {'dx': -90, 'dy':  32},
+	    {'dx':  16, 'dy':  32},
+	    {'dx': -90, 'dy':  64},
+	    {'dx': -58, 'dy':  64},
+	    {'dx': -26, 'dy':  64},
+	    {'dx':  16, 'dy':  64},
+	    {'dx':  48, 'dy':  64},
+	    {'dx':  80, 'dy':  64},
+	], function(index, offset) {
+	    animate($('#kesi' + (index + 1)),
+		    asymptotic(145 + offset.dx, offset.dy,
+			    170 + offset.dx, 140 + offset.dy, 200), 
+		    1, person_fps);
+    });
+    animate($('#kesi01'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
 
     var background_fps = 30;
     //animate($('sign'), cycle(320, 320, 320, -32, 352), 0, background_fps);

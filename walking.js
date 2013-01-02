@@ -1,14 +1,15 @@
 var HOUR_MILLIS = 60 * 60 * 1000;
 var DAY_MILLIS = 24 * HOUR_MILLIS;
-var ORIGIN = Date.parseExact("01/02/2011", "MM/dd/yyyy");
+var ORIGIN = new Date("January 2, 2011");
 
 function updateTime() {
     var today = Date.today();
 
-    var days = (today.days() - ORIGIN.days()) / DAY_MILLIS;
+    var days = (today.clone().days() - ORIGIN.clone().days()) / DAY_MILLIS;
     $('time').innerHTML = Math.floor(days) + " days";
 
-    var weeks = (today.days() - ORIGIN.days()) / (7 * DAY_MILLIS);
+    var weeks = (today.clone().days() - ORIGIN.clone().days()) /
+        (7 * DAY_MILLIS);
     var weeksText = formatTime(Math.floor(weeks), "week");
     if (weeks - Math.floor(weeks) < 1/7)
         weeksText = markAsUpdated(weeksText);
@@ -28,8 +29,8 @@ function unitsBetween(unit, from, to) {
     var units = 0;
     moment.add(unit);
     while (moment.compareTo(to) < 1) {
-	moment.add(unit);
-	units++;
+        moment.add(unit);
+        units++;
     }
     return units;
 }
@@ -45,7 +46,7 @@ function updateYears() {
         var yearsText = formatTime(years, "year");
         if (ORIGIN.getMonth() == today.getMonth() && ORIGIN.getDay() == today.getDay())
             yearsText = markAsUpdated(yearsText);
-    	$('years').innerHTML = yearsText;
+        $('years').innerHTML = yearsText;
     }
 }
 
@@ -66,63 +67,63 @@ function formatTime(amount, unit) {
 function animate(node, path, startingFrame, fps) {
     var frame = startingFrame;
     window.setInterval(function tick() {
-	    node.removeClassName('sprite0');
-	    node.removeClassName('sprite1');
-	    node.removeClassName('sprite2');
-	    node.removeClassName('sprite3');
-	    node.addClassName('sprite' + frame % 4);
+            node.removeClassName('sprite0');
+            node.removeClassName('sprite1');
+            node.removeClassName('sprite2');
+            node.removeClassName('sprite3');
+            node.addClassName('sprite' + frame % 4);
 
-	    var pos = path(frame);
-	    node.setStyle({
-		left: pos[0],
-		top: pos[1]
-	    });
+            var pos = path(frame);
+            node.setStyle({
+                left: pos[0],
+                top: pos[1]
+            });
 
-	    frame += 1;
+            frame += 1;
     }, 1000/fps);
 }
 
 function scroll(node, fps) {
     var delta = 0;
     window.setInterval(function tick() {
-	    node.setStyle({ backgroundPosition: "0 " + delta + "px"});
-	    delta = (delta - 1) % 128;
+            node.setStyle({ backgroundPosition: "0 " + delta + "px"});
+            delta = (delta - 1) % 128;
     }, 1000/fps);
 }
 
 function constant(x, y) {
     return function(t) {
-	return [x, y];
+        return [x, y];
     };
 }
 
 function cycle(x1, y1, x2, y2, frames) {
     var lin = linear(x1, y1, x2, y2, frames);
     return function (t) {
-	return lin(t % frames);
+        return lin(t % frames);
     }
 }
 
 function linear(x1, y1, x2, y2, frames) {
     return function (t) {
-	if (t < frames) {
-	    return [
-		x1 + (x2 - x1) * (t/frames),
-		y1 + (y2 - y1) * (t/frames)
-	       ];
-	} else {
-	    return [x2, y2];
-	}
+        if (t < frames) {
+            return [
+                x1 + (x2 - x1) * (t/frames),
+                y1 + (y2 - y1) * (t/frames)
+               ];
+        } else {
+            return [x2, y2];
+        }
     };
 }
 
 function asymptotic(x1, y1, x2, y2, halflife) {
     return function (t) {
-	var progress = 1 - Math.pow(Math.E, -t/halflife);
-	return [
-	    x1 + (x2 - x1) * progress,
-	    y1 + (y2 - y1) * progress
-	];
+        var progress = 1 - Math.pow(Math.E, -t/halflife);
+        return [
+            x1 + (x2 - x1) * progress,
+            y1 + (y2 - y1) * progress
+        ];
     };
 }
 
@@ -144,17 +145,17 @@ function dailyness(date) {
     sunset.setMinutes(result.setMinutes);
 
     if (date.between(sunrise, sunset)) {
-	return 1;
+        return 1;
     } else {
-	// Sunrise/sunset transition
-	var period = 600;
-	var secondsBeforeSunrise = 
-	    Math.abs(sunrise.getTime() - date.getTime()) / 1000;
-	var secondsAfterSunset = 
-	    Math.abs(date.getTime() - sunset.getTime()) / 1000;
-	return 1 - Math.min(1, 
-		secondsBeforeSunrise/period,
-		secondsAfterSunset/period);
+        // Sunrise/sunset transition
+        var period = 600;
+        var secondsBeforeSunrise = 
+            Math.abs(sunrise.getTime() - date.getTime()) / 1000;
+        var secondsAfterSunset = 
+            Math.abs(date.getTime() - sunset.getTime()) / 1000;
+        return 1 - Math.min(1, 
+                secondsBeforeSunrise/period,
+                secondsAfterSunset/period);
 
     }
 }
@@ -164,11 +165,11 @@ function animateDayNight() {
     var shade = $('shade');
 
     function tick () {
-	var dness = dailyness(new Date());
-	shade.style.zIndex = (dness < 1) ? 1 : -1;
-	var alpha = 0.4;
-	shade.style.backgroundColor = "rgba(0, 0, 255, " + 
-	    alpha*(1-dness) + ")";
+        var dness = dailyness(new Date());
+        shade.style.zIndex = (dness < 1) ? 1 : -1;
+        var alpha = 0.4;
+        shade.style.backgroundColor = "rgba(0, 0, 255, " + 
+            alpha*(1-dness) + ")";
     }
 
     tick();
@@ -178,7 +179,7 @@ function animateDayNight() {
 document.observe('dom:loaded', function() {
     updateTime();
     window.setInterval(function updateTime() {
-	updateTime();
+        updateTime();
     }, HOUR_MILLIS);
 
     var person_fps = 5;

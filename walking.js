@@ -86,7 +86,7 @@ function animate(node, path, startingFrame, fps) {
 function scroll(node, fps) {
     var delta = 0;
     window.setInterval(function tick() {
-            node.setStyle({ backgroundPosition: "0 " + delta + "px"});
+            node.setStyle({ backgroundPosition: "" + delta + "px 0"});
             delta = (delta - 1) % 128;
     }, 1000/fps);
 }
@@ -182,15 +182,21 @@ document.observe('dom:loaded', function() {
         updateTime();
     }, HOUR_MILLIS);
 
-    var person_fps = 5;
     //animate($('sebas'), constant(225, 135), 0, person_fps);
     //animate($('kesi'), constant(190, 140), 1, person_fps);
     //animate($('sebas'), linear(250, 0, 225, 135, 200), 0, person_fps);
     //animate($('kesi'), linear(165, 0, 190, 140, 200), 1, person_fps);
-    animate($('sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
-    animate($('kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
 
-    var background_fps = 30;
+    // Down
+    //var person_fps = 5;
+    //animate($('sebas'), asymptotic(250, 0, 225, 135, 200), 0, person_fps);
+    //animate($('kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
+    // Right
+    var person_fps = 5;
+    animate($('sebas'), asymptotic(-10, 120, 200, 140, 100), 0, person_fps);
+    animate($('kesi'),  asymptotic(-40, 155, 185, 150, 100), 1, person_fps);
+
+    var background_fps = 45;
     scroll($('frame'), background_fps);
 
     animateDayNight();

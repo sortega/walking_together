@@ -74,12 +74,23 @@ p {
     background-position: 0 0;
 }
 
+/* SOUTH */
 .sprite1, .sprite3 {
     background-position: -32px 0;
 }
-
 .sprite2 {
     background-position: -64px 0;
+}
+
+/* EAST */
+.sprite1.E, .sprite3.E {
+    background-position: -32px -64px;
+}
+.sprite2.E {
+    background-position: -64px -64px;
+}
+.sprite0.E {
+    background-position: 0 -64px;
 }
 
 .updated {

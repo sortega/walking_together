@@ -149,11 +149,11 @@ function dailyness(date) {
     } else {
         // Sunrise/sunset transition
         var period = 600;
-        var secondsBeforeSunrise = 
+        var secondsBeforeSunrise =
             Math.abs(sunrise.getTime() - date.getTime()) / 1000;
-        var secondsAfterSunset = 
+        var secondsAfterSunset =
             Math.abs(date.getTime() - sunset.getTime()) / 1000;
-        return 1 - Math.min(1, 
+        return 1 - Math.min(1,
                 secondsBeforeSunrise/period,
                 secondsAfterSunset/period);
 
@@ -168,7 +168,7 @@ function animateDayNight() {
         var dness = dailyness(new Date());
         shade.style.zIndex = (dness < 1) ? 1 : -1;
         var alpha = 0.4;
-        shade.style.backgroundColor = "rgba(0, 0, 255, " + 
+        shade.style.backgroundColor = "rgba(0, 0, 255, " +
             alpha*(1-dness) + ")";
     }
 
@@ -191,7 +191,6 @@ document.observe('dom:loaded', function() {
     animate($('kesi'),  asymptotic(165, 0, 190, 140, 200), 1, person_fps);
 
     var background_fps = 30;
-    animate($('sign'), cycle(320, 320, 320, -32, 352), 0, background_fps);
     scroll($('frame'), background_fps);
 
     animateDayNight();

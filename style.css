@@ -55,6 +55,10 @@ p {
     background-image: url("img/sebas.png");
 }
 
+#mario {
+    background-image: url("img/mario.png");
+}
+
 #sign {
     background-image: url("img/sign.png");
     line-height: 27px;
@@ -63,7 +67,7 @@ p {
     color: #c1b799;
 }
 
-#kesi, #sebas, #sign {
+#kesi, #sebas, #mario, #sign {
     width: 32px;
     height: 32px;
     position: absolute;

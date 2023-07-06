@@ -195,6 +195,7 @@ document.observe('dom:loaded', function() {
     var person_fps = 5;
     animate($('sebas'), asymptotic(-10, 120, 200, 140, 100), 0, person_fps);
     animate($('kesi'),  asymptotic(-40, 155, 185, 150, 100), 1, person_fps);
+    animate($('mario'),  asymptotic(-40+22, 160, 185+22, 155, 100), 1, person_fps);
 
     var background_fps = 45;
     scroll($('frame'), background_fps);
